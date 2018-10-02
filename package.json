@@ -1,0 +1,7 @@
+{
+    "name": "Nodeprojekt",
+    "dependencies": {
+        "express": "4.16.3",
+        "ejs": "2.6.1"
+    }
+}
