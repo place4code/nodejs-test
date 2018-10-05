@@ -11,15 +11,21 @@ app.use(express.static("./public"));
 
 let entries = [
     new GuestbookEntry("Überschrift", "Inhalt"),
+    new GuestbookEntry("Überschrift 2", "Inhalt"),
 ]
 
 app.get("/", (req, res) => {
-
     res.render("index", {
         entries: entries
     });
     res.end();
 });
+
+app.post("/guestbook/new", (req, res) => {
+    res.write("Erfolgreich!");
+    res.end();
+});
+
 
 app.listen(5000, () => {
     console.log("test wurde gestartet auf localhost 5000");

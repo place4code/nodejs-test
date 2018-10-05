@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Gästebuch</title>
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
@@ -14,18 +14,36 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-6-md ">
+
+                <form method="POST" action="/guestbook/new">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Überschrift</label>
+                        <input type="text" name="title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Überschrift">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Inhalt</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Absenden</button>
+                </form>
+
+
                 <% for(let entry of entries) { %>
                 
-                <div>
-                    <h2>
-                        <%= entry.title %>
-                    </h2>
-                    <p>
-                        <%= entry.content %>
-                    </p>
-                </div>
+
+                    <div class="card" style="width: 18rem; margin-top: 16px;">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= entry.title %></h5>
+                            <p class="card-text"><%= entry.content %></p>
+                            <a href="#" class="btn btn-primary">Klick</a>
+                        </div>
+                    </div>
+
+
+                
                 
                 <% } %>
+                
             </div>
         </div>
     </div>
