@@ -7,6 +7,19 @@ let express = require("express");
 let bodyParser = require("body-parser");
 //class
 let GuestbookEntry = require("./src/GuestbookEntry");
+//file
+let fs = require("fs");
+
+fs.readFile("./data.json", "utf-8", (err, data) => {
+    if (err) throw err;
+    let d = JSON.parse(data);
+
+    let entries = [];
+    for (const entry of d) {
+        entries.push(new GuestbookEntry(entry.title, entry.content));
+    }
+
+
 
 //express anwendung erstellen
 let app = express();
@@ -19,11 +32,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
-
-let entries = [
-    new GuestbookEntry("Was ist Lorem Ipsum?", "Lorem Ipsum ist ein einfacher Demo-Text für die Print- und Schriftindustrie. Lorem Ipsum ist in der Industrie bereits der Standard Demo-Text seit 1500, als ein unbekannter Schriftsteller eine Hand voll Wörter nahm und diese durcheinander warf um ein Musterbuch zu erstellen"),
-    new GuestbookEntry("Warum nutzen wir es?", "Es ist ein lang erwiesener Fakt, dass ein Leser vom Text abgelenkt wird, wenn er sich ein Layout ansieht."),
-]
 
 app.get("/", (req, res) => {
     res.render("index", {
@@ -48,20 +56,4 @@ app.listen(5000, () => {
     console.log("test wurde gestartet auf localhost 5000");
 });
 
-
-
-
-/*
-let http = require("http");
-
-let server = http.createServer((request, response) => {
-    if (request.url != "/") {
-        response.write("url rozny od /");
-    }
-    response.write("write");
-    console.log("wurde ausgeführt!");
-    response.end();
-});
-
-server.listen(5000);
-*/
+}); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
