@@ -14,11 +14,12 @@ fs.readFile("./data.json", "utf-8", (err, data) => {
     if (err) throw err;
     let d = JSON.parse(data);
 
+    //array für Einträge
     let entries = [];
+
     for (const entry of d) {
         entries.push(new GuestbookEntry(entry.title, entry.content));
     }
-
 
 
 //express anwendung erstellen
@@ -36,9 +37,10 @@ app.set("views", "./views");
 app.get("/", (req, res) => {
     res.render("index", {
         entries: entries
+        //jetzt kann ich entries im ejs verwenden
     });
     res.end();
-});
+})
 
 app.post("/guestbook/new", (req, res) => {
     //content und title aus dem Formulare
@@ -48,12 +50,18 @@ app.post("/guestbook/new", (req, res) => {
     let eintrag = new GuestbookEntry(title, content);
     entries.push(eintrag);
     //entries.push(new GuestbookEntry(req.body.title, req.body.content));
+    //json speichern:
+    fs.writeFile("./data.json", JSON.stringify(entries), (err) => {
+        if(err) throw err;
+    });
+
     res.redirect("/");
-});
+    
+})
 
 
 app.listen(5000, () => {
     console.log("test wurde gestartet auf localhost 5000");
-});
+})
 
 }); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
